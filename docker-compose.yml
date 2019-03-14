@@ -3,6 +3,10 @@ version: '3'
 services:
   postgres:
     image: postgres:9.6
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=123456
   nginx:
     image: nginx:1.15
     ports:
@@ -15,6 +19,8 @@ services:
     restart: always
     environment:
       - DJANGO_SECRET_KEY=local
+      - PORT=8000
+      - POSTGRES_CONN_STRING=postgres://postgres:123456@postgres:5432/postgres
     image: web
     build: ./
     command: >
@@ -23,8 +29,6 @@ services:
                ./manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./:/code
-    ports:
-      - "8000:8000"
     depends_on:
       - postgres
       - nginx
