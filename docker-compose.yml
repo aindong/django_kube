@@ -28,11 +28,3 @@ services:
     depends_on:
       - postgres
       - nginx
-  documentation:
-    restart: always
-    build: ./
-    command: "mkdocs serve"
-    volumes:
-      - ./:/code
-    ports:
-      - "8001:8001"
