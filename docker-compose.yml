@@ -7,14 +7,20 @@ services:
       - POSTGRES_PASSWORD=123456
   nginx:
     image: nginx:1.15
+    networks:
+      - web_network
     ports:
       - "8000:80"
     volumes:
       - ./config/nginx/conf.d:/etc/nginx/conf.d
       - ./static:/code/static
       - ./media:/code/media
+    depends_on:
+      - web
   web:
     restart: always
+    networks:
+      - web_network
     environment:
       - DJANGO_SECRET_KEY=local
       - PORT=8000
@@ -30,4 +36,7 @@ services:
       - ./:/code
     depends_on:
       - postgres
-      - nginx
+
+networks:
+  web_network:
+    driver: bridge
