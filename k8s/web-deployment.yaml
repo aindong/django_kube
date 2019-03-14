@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    holdings.yoyo.service: web
+  name: web
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        holdings.yoyo.service: web
+    spec:
+      imagePullSecrets:
+        - name: awsecr-cred
+      containers:
+        - image: 537261657408.dkr.ecr.ap-southeast-1.amazonaws.com/django_kube:latest
+          name: web
+          resources: {}
+          env:
+            - name: DJANGO_SECRET_KEY
+              value: local
+            - name: PORT
+              value: "8000"
+            - name: POSTGRES_CONN_STRING
+              value: postgres://postgres:123456@postgres:5432/postgres
+
+      restartPolicy: Always
+status: {}

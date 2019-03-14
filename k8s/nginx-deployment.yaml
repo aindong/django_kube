@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    holdings.yoyo.service: nginx
+  name: nginx
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        holdings.yoyo.service: nginx
+    spec:
+      containers:
+      - image: nginx:1.15
+        name: nginx
+        ports:
+        - containerPort: 8000
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/nginx/conf.d/web.conf
+          name: nginx-config
+          subPath: web.conf
+        - mountPath: /code/static
+          name: nginx-claim1
+        - mountPath: /code/media
+          name: nginx-claim2
+      restartPolicy: Always
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: nginx-config
+      - name: nginx-claim1
+        persistentVolumeClaim:
+          claimName: nginx-claim1
+      - name: nginx-claim2
+        persistentVolumeClaim:
+          claimName: nginx-claim2
+status: {}

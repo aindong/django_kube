@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    holdings.yoyo.service: postgres
+  name: postgres
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        holdings.yoyo.service: postgres
+    spec:
+      containers:
+      - env:
+        - name: POSTGRES_PASSWORD
+          value: "123456"
+        image: postgres:9.6
+        name: postgres
+        resources: {}
+      restartPolicy: Always
+status: {}
