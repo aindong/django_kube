@@ -22,3 +22,14 @@ in Kubernetes.
 7. once everything is started get the NodePort of `nginx` using `kubectl get service/nginx`
 8. under ports you will see something similar to `8000:30775/TCP` in my case it is `30775`
 9. now execute `open $(minikube ip):30775` a browser will open with the ip of the minikube and the nodeport
+
+
+#### TODO
+- [x] Run on dev machine using docker-compose
+- [x] Deploy to kubernetes with minikube
+- [ ] Add Deploy to kubernetes single script
+- [ ] Add GraphQL
+- [ ] Add Celery Worker
+- [ ] Add Celery Beats
+- [ ] Add Redis
+- [ ] Move sensitive environment information to secrets
